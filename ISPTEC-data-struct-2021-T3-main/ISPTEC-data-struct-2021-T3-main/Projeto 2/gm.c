@@ -14,7 +14,7 @@ LCD * _insertInStart( LCD * l, char * name )  {
 	LCD * novo = ( LCD * )malloc( sizeof( LCD ) ) , * aux = l ; 
 	
 	if( novo == NULL ){
-		printf("Memória cheia!\n\n");
+		printf("MemÃ³ria cheia!\n\n");
 		return l;
 	}
 	
@@ -28,7 +28,7 @@ LCD * _insertInStart( LCD * l, char * name )  {
 	
 	
 	if( aux->next == l ){
-		novo->next =  l;
+		novo->next = aux;
 		novo->prev = aux;
 		aux->next = novo;
 		aux->prev = novo;
@@ -62,34 +62,44 @@ LCD  * _remove( LCD * l)
 	
 	srand((unsigned) time(&t));
 	
-	number = rand() % 51 + 1;
+	number = rand() % 10 + 1;
 	
-	printf("%d", number);
+	//Apresentar Numero Sorteado
+	printf("\nNumero Sortedo: %d\n\n", number);
+	system("pause");
 	
+	//Identificar o No do Soldado Sorteado
 	while(aux->name != name)
 		aux = aux->next;
 	
-	while(aux->next != aux)
+	printf("\n");
+	
+	while(aux->next != aux) //Verificar Se a Lista Contem Um So Elemento
 	{
 		i = 0;
-		while(i != number)
+		while(i != number)//Contagem Anti-Horaria
 		{
-			ptr = ptr->prev;
+			aux = aux->prev;
 			i++;
+			
+			printf("%d - %s\n", i, aux->name);
 		}
 		
-		aux2 = ptr; 
+		printf("\n");
 		
-		ptr->prev->next = ptr->next;
-		ptr->next->prev = ptr->prev;
+		system("pause");
 		
-		ptr = ptr->next;
+		
+		aux2 = aux; 
+		
+		printf("\nSoldado Removido: %s\n\n", aux2->name);
+		
+		aux->prev->next = aux->next;
+		aux->next->prev = aux->prev;
+		aux = aux->next;
 		 
-		printf("Soldado Removido: %s \n", aux2->name);
-		
-		_destroy(aux2); 
+		_destroy(aux2);
 	}
-	
 	
 	return aux;	
 }
@@ -118,15 +128,15 @@ char * _sortName( LCD * l )
 		number--;
 	}
 	
-	printf("%s", aux->name);
-	system("pause");
+	//Apresentar Nome Sorteado
+	printf("\nNome Sorteado: %s\n\n", aux->name);
 	
 	return aux->name;
 }
 
 void _print( LCD * l, LCD * start ) {
 	
-	printf("Imprimir %s\n", l->name);
+	printf("%s\n", l->name);
 	
 	if( l->next != start )
 		_print( l->next,  start );
@@ -135,6 +145,5 @@ void _print( LCD * l, LCD * start ) {
 void _destroy( LCD * l){
 	free( l );
 }
-
 
 
